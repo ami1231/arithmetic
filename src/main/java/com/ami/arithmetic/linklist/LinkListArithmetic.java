@@ -4,10 +4,11 @@ package com.ami.arithmetic.linklist;
  * linklist 双向链表
  * linklist 支持动态阔容,因为他不像arraylist这样
  * 需要复制原本array 扩大1.5倍
+ * 新增linkedlList版本的stack
  */
 public class LinkListArithmetic<T> {
 
-    private int size;
+    private int size = 0;
 
     private Node<T> firstNode;
     private Node<T> lastNode;
@@ -26,7 +27,7 @@ public class LinkListArithmetic<T> {
         }else {
             oldLastNode.setNextNode(newLastNode);
         }
-        size++;
+        ++size;
         return true;
     }
 
@@ -77,11 +78,28 @@ public class LinkListArithmetic<T> {
             nextNode.setPrevNode(prevNode);
             node = null;
         }
-
-
-
-
+        --size;
         return true;
+    }
+
+    public T pop (){
+
+        if(lastNode == null){
+            return null;
+        }
+
+        T item = lastNode.getItem();
+
+        Node<T> tempNode = lastNode.getPrevNode();
+        if(tempNode!=null){
+            lastNode = tempNode;
+        }
+        --size;
+        return item;
+    }
+
+    public int size(){
+        return size;
     }
 
     @Override
